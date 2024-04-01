@@ -37,9 +37,9 @@ namespace GraphQlPlayground.Services
             return menu;
         }
 
-        public Menu UpdateMenu(Menu menu)
+        public Menu UpdateMenu(int id, Menu menu)
         {
-            var menuToUpdate = _menuList.Find(x => x.Id == menu.Id);
+            var menuToUpdate = _menuList.Find(x => x.Id == id);
             menuToUpdate.Name = menu.Name;
             menuToUpdate.Description = menu.Description;
             menuToUpdate.Price = menu.Price;

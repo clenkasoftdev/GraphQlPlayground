@@ -8,7 +8,7 @@ namespace GraphQlPlayground.Interfaces
         Menu GetMenuById(int id);
         Menu GetMenuByName(string name);
         Menu AddMenu(Menu menu);
-        Menu UpdateMenu(Menu menu);
+        Menu UpdateMenu(int id, Menu menu);
         void DeleteMenu(int id);
 
 
