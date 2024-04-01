@@ -1,12 +1,14 @@
 using GraphiQl;
 using GraphQL;
 using GraphQL.Types;
+using GraphQlPlayground.Data;
 using GraphQlPlayground.GraphQLs.Mutation;
 using GraphQlPlayground.GraphQLs.Query;
 using GraphQlPlayground.GraphQLs.Schema;
 using GraphQlPlayground.GraphQLs.Type;
 using GraphQlPlayground.Interfaces;
 using GraphQlPlayground.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddTransient<MenuMutation>();
 builder.Services.AddTransient<ISchema,MenuSchema>();
 
 builder.Services.AddGraphQL(o => o.AddAutoSchema<ISchema>().AddSystemTextJson());
+builder.Services.AddDbContext<GraphQlPlaygroundDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
 
 var app = builder.Build();
 

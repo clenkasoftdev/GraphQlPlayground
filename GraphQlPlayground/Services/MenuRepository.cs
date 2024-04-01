@@ -1,4 +1,5 @@
-﻿using GraphQlPlayground.Interfaces;
+﻿using GraphQlPlayground.Data;
+using GraphQlPlayground.Interfaces;
 using GraphQlPlayground.Models;
 
 namespace GraphQlPlayground.Services
@@ -6,51 +7,55 @@ namespace GraphQlPlayground.Services
     public class MenuRepository : IMenuRepository
     {
        
-        private static List<Menu> _menuList = new List<Menu>
+
+        private GraphQlPlaygroundDbContext _dbContext;
+
+        public MenuRepository(GraphQlPlaygroundDbContext dbContext)
         {
-            new Menu { Id = 1, Name = "Burger", Description = "Tasty Burger", Price = 10.0 },
-            new Menu { Id = 2, Name = "Pizza", Description = "Cheesy Pizza", Price = 15.0 },
-            new Menu { Id = 3, Name = "Pasta", Description = "Creamy Pasta", Price = 12.0 },
-            new Menu { Id = 4, Name = "Sandwich", Description = "Healthy Sandwich", Price = 8.0 },
-            new Menu { Id = 5, Name = "Salad", Description = "Fresh Salad", Price = 6.0 }
-        };
+            _dbContext = dbContext;
+        }
 
         public List<Menu> GetAllMenus()
         {
-           return _menuList;
+           return _dbContext.Menus.ToList();
         }
 
         public Menu GetMenuById(int id)
         {
-            return _menuList.Find(x => x.Id == id);
+            return _dbContext.Menus.Find(id);
         }
 
         public Menu GetMenuByName(string name)
         {
-            return _menuList.Find(x => x.Name == name);
+            return _dbContext.Menus.Where(x => x.Name == name).FirstOrDefault();
         }
 
 
         public Menu AddMenu(Menu menu)
         {
-            _menuList.Add(menu);
+            _dbContext.Menus.Add(menu);
+            _dbContext.SaveChanges();
             return menu;
         }
 
         public Menu UpdateMenu(int id, Menu menu)
         {
-            var menuToUpdate = _menuList.Find(x => x.Id == id);
+            
+            var menuToUpdate = _dbContext.Menus.Find(id);
             menuToUpdate.Name = menu.Name;
             menuToUpdate.Description = menu.Description;
             menuToUpdate.Price = menu.Price;
+            _dbContext.Menus.Update(menuToUpdate);
+            _dbContext.SaveChanges();
             return menuToUpdate;
             
         }
 
         public void DeleteMenu(int id)
         {
-            var menuToDelete = _menuList.Find(x => x.Id == id);
-            _menuList.Remove(menuToDelete);
+            var menuToDelete = _dbContext.Menus.Find(id);
+            _dbContext.Menus.Remove(menuToDelete);
+            _dbContext.SaveChanges();
            
         }
     }
