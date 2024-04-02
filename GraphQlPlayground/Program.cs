@@ -20,11 +20,32 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IMenuRepository, MenuRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IReservationRepository, ReservationRepository>();
+
 builder.Services.AddTransient<MenuType>();
-builder.Services.AddTransient<MenuInputType>();
+builder.Services.AddTransient<CategoryType>();
+builder.Services.AddTransient<ReservationType>();
+
+
+
 builder.Services.AddTransient<MenuQuery>();
+builder.Services.AddTransient<CategoryQuery>();
+builder.Services.AddTransient<ReservationQuery>();
+builder.Services.AddTransient<RootQuery>();
+
+
 builder.Services.AddTransient<MenuMutation>();
-builder.Services.AddTransient<ISchema,MenuSchema>();
+builder.Services.AddTransient<MenuInputType>();
+
+
+builder.Services.AddTransient<ISchema,RootSchema>();
+
+
+
+
+
+
 
 builder.Services.AddGraphQL(o => o.AddAutoSchema<ISchema>().AddSystemTextJson());
 builder.Services.AddDbContext<GraphQlPlaygroundDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
