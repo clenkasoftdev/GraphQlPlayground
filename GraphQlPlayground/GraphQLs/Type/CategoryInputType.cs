@@ -2,16 +2,15 @@
 
 namespace GraphQlPlayground.GraphQLs.Type
 {
-    public class MenuInputType : InputObjectGraphType
+    public class CategoryInputType : InputObjectGraphType
     {
-        public MenuInputType()
+        public CategoryInputType()
         {
             Field<IntGraphType>("id");
             Field<StringGraphType>("name");
-            Field<StringGraphType>("description");
-            Field<FloatGraphType>("price");
-            Field<IntGraphType>("categoryId");
             Field<StringGraphType>("imageUrl");
+
+
         }
     }
 }
